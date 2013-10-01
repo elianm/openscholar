@@ -118,7 +118,7 @@ projects[fb_social][download][revision] = cd73e9b
 projects[fb_social][patch][] = "https://raw.github.com/openscholar/comment_sources/a60c0282a1d8a7dbd8d0021c82b73919ada7034b/patches/fb_social.patch"
 
 projects[features][subdir] = "contrib"
-projects[features][version] = 1.0
+projects[features][version] = 2.0-rc3
 ; projects[features][revision] = "c0b054d"
 
 projects[feeds][subdir] = "contrib"
