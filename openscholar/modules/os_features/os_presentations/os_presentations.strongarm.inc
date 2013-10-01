@@ -1,7 +1,4 @@
 <?php
-// $Id$
-
-
 /**
  * @file
  * os_presentations.strongarm.inc
@@ -14,64 +11,56 @@ function os_presentations_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_anonymous_presentation';
   $strongarm->value = 0;
   $export['comment_anonymous_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_default_mode_presentation';
   $strongarm->value = 1;
   $export['comment_default_mode_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_default_per_page_presentation';
   $strongarm->value = '50';
   $export['comment_default_per_page_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_form_location_presentation';
   $strongarm->value = 1;
   $export['comment_form_location_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_presentation';
-  $strongarm->value = '0';
+  $strongarm->value = '1';
   $export['comment_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_preview_presentation';
   $strongarm->value = '1';
   $export['comment_preview_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_subject_field_presentation';
   $strongarm->value = 1;
   $export['comment_subject_field_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_presentation';
   $strongarm->value = array(
@@ -80,16 +69,14 @@ function os_presentations_strongarm() {
   $export['menu_options_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_parent_presentation';
   $strongarm->value = 'main-menu:0';
   $export['menu_parent_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_options_presentation';
   $strongarm->value = array(
@@ -99,24 +86,21 @@ function os_presentations_strongarm() {
   $export['node_options_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_presentation';
   $strongarm->value = '0';
   $export['node_preview_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_submitted_presentation';
   $strongarm->value = 1;
   $export['node_submitted_presentation'] = $strongarm;
 
   $strongarm = new stdClass();
-  /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->disabled = FALSE;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_presentation_pattern';
   $strongarm->value = 'presentations/[node:title]';
@@ -124,4 +108,3 @@ function os_presentations_strongarm() {
 
   return $export;
 }
-

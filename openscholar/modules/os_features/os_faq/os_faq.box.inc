@@ -1,7 +1,4 @@
 <?php
-// $Id$
-
-
 /**
  * @file
  * os_faq.box.inc
@@ -14,14 +11,13 @@ function os_faq_default_box() {
   $export = array();
 
   $box = new stdClass();
-  /* Edit this to true to make a default box disabled initially */
-  $box->disabled    = FALSE;
+  $box->disabled = FALSE; /* Edit this to true to make a default box disabled initially */
   $box->api_version = 1;
-  $box->delta       = 'os_faq_sv_list';
-  $box->plugin_key  = 'os_sv_list_box';
-  $box->title       = 'Recent FAQs';
+  $box->delta = 'os_faq_sv_list';
+  $box->plugin_key = 'os_sv_list_box';
+  $box->title = 'Recent FAQs';
   $box->description = 'Recent FAQs';
-  $box->options     = array(
+  $box->options = array(
     'content_type' => 'faq',
     'display' => 'display_title',
     'more' => 1,
@@ -75,4 +71,3 @@ function os_faq_default_box() {
 
   return $export;
 }
-
