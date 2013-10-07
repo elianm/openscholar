@@ -86,7 +86,7 @@ function drush_vsite_redirect_disable() {
   }
 
   $spaces_query->execute();
-  $purl_query->execute(); 
+  $purl_query->execute();
 
   if ($nid) {
     // Get the vsite path.
@@ -99,9 +99,19 @@ function drush_vsite_redirect_disable() {
   }
 
   if (!(drush_get_option('no-purl-warning', FALSE))) {
+    $purl_base_domain = FALSE;
+
+    if ($uri = drush_get_option('uri')) {
+      $purl_base_domain = $uri;
+    }
     // Asking the user if he would like to change the purl_base_domain variable.
-    if (drush_confirm(dt('Would you like to change the purl base domain variable value?'))) {
+    elseif (drush_confirm(dt('Would you like to change the purl base domain variable value?'))) {
       $purl_base_domain = drush_prompt(dt('Please enter the new purl base domain of your OS installation'));
+      variable_set('purl_base_domain', $purl_base_domain);
+      drush_log(dt("The variable 'purl_base_domain' has changed to @domain", array('@domain' => $purl_base_domain)), 'success');
+    }
+
+    if ($purl_base_domain) {
       variable_set('purl_base_domain', $purl_base_domain);
       drush_log(dt("The variable 'purl_base_domain' has changed to @domain", array('@domain' => $purl_base_domain)), 'success');
     }
