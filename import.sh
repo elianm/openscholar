@@ -4,6 +4,7 @@ cd www
 drush sql-drop -y
 `drush sql-connect` < $1
 drush updb -y
+drush cc all
 drush vrd -y --uri=$2
 drush dl acquia_connector
 drush en dblog -y
