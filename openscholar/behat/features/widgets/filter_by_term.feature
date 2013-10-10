@@ -8,7 +8,8 @@ Feature:
   | Vocabularies           | authors             | select list |
   | Show empty terms       | check               | checkbox    |
   | Show child terms       | check               | checkbox    |
-  | Taxonomy tree depth.  | Show all children  | select list |
+  | Taxonomy tree depth.   | Show all children   | select list |
+  | Show number of posts   | uncheck             | checkbox    |
     When I visit "john/publications"
     Then I should see "Filter by term"
     And I should see the following <links>
