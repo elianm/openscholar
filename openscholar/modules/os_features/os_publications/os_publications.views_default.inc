@@ -297,8 +297,8 @@ if(module_exists(\'apachesolr_search\')){
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '1';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = decode_entities('&laquo;');
-  $handler->display->display_options['pager']['options']['tags']['next'] = decode_entities('&raquo;');
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '«';
+  $handler->display->display_options['pager']['options']['tags']['next'] = '»';
   $export['publication_contributors'] = $view;
 
   $view = new view();
@@ -443,8 +443,8 @@ if(module_exists(\'apachesolr_search\')){
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '1';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = decode_entities('&laquo;');
-  $handler->display->display_options['pager']['options']['tags']['next'] = decode_entities('&raquo;');
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '«';
+  $handler->display->display_options['pager']['options']['tags']['next'] = '»';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Publication: Type of Publication */
   $handler->display->display_options['arguments']['name']['id'] = 'name';
@@ -610,8 +610,8 @@ if(module_exists(\'apachesolr_search\')){
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '1';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = decode_entities('&laquo;');
-  $handler->display->display_options['pager']['options']['tags']['next'] = decode_entities('&raquo;');
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '«';
+  $handler->display->display_options['pager']['options']['tags']['next'] = '»';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['grouping'] = '';
