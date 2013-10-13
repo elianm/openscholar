@@ -53,13 +53,9 @@ border-top:3px solid #DDD;
  
 }
 
-a.rslides_nav.prev {
-    background: url('/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png') repeat scroll 2px 2px #D16103;
-}
 
-
-a.rslides_nav.next {
-    background: url('/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png') repeat scroll -20px 2px #D16103;
+a.rslides_nav {
+    background-color: #D16103;
 }
 
 

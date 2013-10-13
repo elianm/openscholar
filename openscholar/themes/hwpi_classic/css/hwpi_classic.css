@@ -208,23 +208,13 @@ h2.block-title {
 
 /** SLIDESHOW **/
 	
-a.rslides_nav.next {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll -20px 2px #4384C4;
+a.rslides_nav {
+    background-color:#4384C4;
 }
 
-a.rslides_nav.prev {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll 2px 2px #4384C4;
+#layout_16_9_below a.rslides_nav {
+    background-color: #284F76;
 }
-
-#layout_16_9_below a.rslides_nav.next {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll -20px 2px #284F76;
-}
-
-#layout_16_9_below a.rslides_nav.prev {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll 2px 2px #284F76;
-}
-
-
 
 
 #layout_16_9_side .slide-copy h2,

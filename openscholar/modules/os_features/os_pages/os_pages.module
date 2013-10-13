@@ -319,7 +319,7 @@ function os_pages_node_view_alter(&$build, $type) {
 /**
  * Implements hook_form_BASE_FORM_ID_alter() for node_form.
  */
-function os_pages_form_node_form_alter(&$form, $form_state) {
+function os_pages_form_node_form_alter(&$form, &$form_state) {
   if ($form['#node']->type != 'page') {
     return;
   }
@@ -334,6 +334,12 @@ function os_pages_form_node_form_alter(&$form, $form_state) {
   if (isset($form_state['build_info']['args'][1])) {
     $form['#after_build'][] = '_os_pages_show_portion';
   }
+
+  // required for AJAX to work properly
+  $form_state['build_info']['files'][] = array(
+    'module' => 'node',
+    'type' => 'pages.inc',
+  );
 }
 
 function os_pages_form_cp_layout_full_form_alter(&$form, &$form_state) {
@@ -646,4 +652,39 @@ function os_pages_form_node_form_alter_add_assets(&$form, $type = 'page') {
     'data' => $data,
     'type' => 'setting',
   );
+}
+
+/**
+ * Gets all parents for a given path
+ */
+function os_pages_get_subpage_parents() {
+  $paths = &drupal_static(__FUNCTION__, array());
+
+  if (empty($paths)) {
+    $node = menu_get_object();
+    if (isset($node->book)) {
+      for ($i=1;$i<10;$i++) {
+        if ($node->book["p$i"]) {
+          $link = menu_link_load($node->book["p$i"]);
+          $paths[$link['link_path']] = $link['link_path'];
+        }
+        else {
+          break;
+        }
+      }
+    }
+  }
+
+  return $paths;
+}
+
+/**
+ * Activates each link that is a parent of the current link
+ */
+function os_pages_preprocess_menu_link(&$vars) {
+  $active_trail = os_pages_get_subpage_parents();
+  if (in_array($vars['element']['#href'], $active_trail)) {
+    $vars['element']['#attributes']['class'][] = 'active-trail';
+    $vars['element']['#localized_options']['attributes']['class'][] = 'active';
+  }
 }

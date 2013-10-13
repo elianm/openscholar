@@ -187,3 +187,12 @@ padding-left: 55px;
     width: 30%;
 }
 
+.cp-appearance-flavor-list {
+    text-align: right;
+}
+
+.false-item {
+    list-style-image: none;
+    overflow: auto;
+    margin-bottom: 1em;
+}

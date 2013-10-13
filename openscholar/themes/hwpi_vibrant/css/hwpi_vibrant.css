@@ -905,19 +905,7 @@ background: linear-gradient(to bottom, #ac253a 0%, #880f1c 100%);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ac253a', endColorstr='#880f1c',GradientType=0 );
 }
 
-a.rslides_nav.prev,
-a.rslides_nav.next {
+a.rslides_nav {
 	background-color:#4F0912;
 }
 
-
-/* 3-1 SLIDESHOW 
-.front.no-sidebars .region-content-top #layout_3_1_overlay .rslides li {
-padding: 0 0 0 60px;
-}
-
-.front.no-sidebars .region-content-top #layout_3_1_overlay .slide-copy {
-margin-top: 48px;
-}
-
-*/

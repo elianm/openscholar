@@ -788,16 +788,35 @@ function os_settings_form($form_state) {
 
   $form['os_general'] = array(
     '#type' => 'fieldset',
-    '#title' => t('General'),
+    '#title' => t('Dropdown menus'),
     '#weight' => 0,
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
+    '#collapsed' => TRUE,
   );
   $form['os_general']['os_use_dropdowns'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use dropdowns'),
     '#default_value' => variable_get('os_use_dropdowns', 1),
     '#description' => t('Enable dropdowns globally across your site. Unchecking will disable all custom menus from having dropdowns at all.'),
+  );
+  $form['os_platform_notifications'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Platform notifications'),
+    '#weight' => 1,
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['os_platform_notifications']['os_platform_notifications_feeds'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Feed URLs'),
+    '#default_value' => variable_get('os_platform_notifications_feeds', ''),
+    '#description' => t('Enter one or more RSS feeds to create a "Notifications" tab in the Admin Toolbar. Use commas to separate.'),
+  );
+  $form['os_platform_notifications']['os_platform_notifications_max'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Max'),
+    '#default_value' => variable_get('os_platform_notifications_max', '3'),
+    '#description' => t('Maximum amount of notification items to list for users.'),
   );
 
   return system_settings_form($form);
@@ -1532,4 +1551,35 @@ function os_grant_unpublished_viewing_permission() {
       }
     }
   }
+}
+
+/**
+ * Implements hook_preprocess_toolbar().
+ */
+function os_preprocess_toolbar(&$vars) {
+  $feeds = variable_get('os_platform_notifications_feeds', '');
+  if (empty($feeds)) {
+    return;
+  }
+
+  // Adds the Notifications link to the Admin toolbar.
+  $path = drupal_get_path('module', 'os');
+  $vars['toolbar']['toolbar_right']['os_notifications'] = array(
+    '#theme' => 'links',
+    '#links' => array(
+      0 => array(
+        'title' => t('Notifications'),
+        'href' => '',
+        'html' => TRUE,
+        'attributes' => array(
+          'class' => array('os-notifications-icon'),
+          'id' => 'os-notifications-menu-link',
+          'data-tooltip' => t('Learn about updates that affect your site')
+        ),
+      ),
+    ),
+    '#attached' => array(
+      'js' => array("$path/theme/os_notifications.js"),
+    ),
+  );
 }

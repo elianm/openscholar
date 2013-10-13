@@ -10,24 +10,25 @@
  *
  */
 
+$screenshot = t('no screenshot available');
+if (file_exists($info['screenshot'])) {
+  $screenshot = theme('image', array(
+    'path' => $info['screenshot'],
+    'alt' => t('Screenshot for %theme theme', array('%theme' => $info['name'])),
+    'title' => '',
+    'attributes' => array('class' => 'screenshot', 'id' => 'screenshot_' . $info['theme_name']),
+    'getsize' => FALSE
+  ));
+}
 
-  $screenshot = t('no screenshot available');
-  if (file_exists($info['screenshot'])) {
-    $screenshot = theme('image', array(
-      'path' => $info['screenshot'], 
-      'alt' => t('Screenshot for %theme theme', array('%theme' => $info['name'])), 
-      'title' => '', 
-      'attributes' => array('class' => 'screenshot', 'id' => 'screenshot_' . $info['theme_name']), 
-      'getsize' => FALSE
-    ))
-    ;
-  }
 ?>
-  <?php echo $screenshot?>
-  <div class="theme-info">
-    <h3><?php echo $info['name'] ?></h3>
-    <?php if ($sub_theme): ?>
-<div style="text-align:right;">Flavors  <?php echo $sub_theme ?></div>
+<?php echo $screenshot; ?>
+<div class="theme-info">
+  <h3><?php echo $info['name']; ?></h3>
+  <?php if ($sub_theme): ?>
+    <div class="cp-appearance-flavor-list">
+      Flavors <?php echo $sub_theme; ?>
+    </div>
   <?php endif; ?>
 
 

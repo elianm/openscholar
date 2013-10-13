@@ -87,6 +87,15 @@ margin-right:8px !important;
     margin: 0 !important;
 }
 
+a.rslides_nav.next {
+background-position: -32px -3px !important;
+padding: 4px 18px 0 !important;
+}
+
+a.rslides_nav.prev {
+background-position: -1px -3px !important;
+padding: 4px 18px 0 !important;
+}
 	
 }
 

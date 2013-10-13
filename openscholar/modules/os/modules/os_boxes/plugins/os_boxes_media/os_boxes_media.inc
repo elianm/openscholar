@@ -90,7 +90,7 @@ class os_boxes_media extends os_boxes_default {
           $file->image_dimensions['width'] = $this->options['maxwidth'];
         }
         else {
-          $file->override['width'] = $this->options['maxwidth'];
+          $file->override['maxwidth'] = $this->options['maxwidth'];
         }
       }
       $render = file_view($file, 'full');

@@ -184,12 +184,18 @@ img,
 a img {
   border: 0;
 }
+
 p {
+  margin: 0 0 1.5em;
+  padding: 0;
+}
+
+#columns p {
   margin: 0;
   padding: 0;
 }
 
-p+p {
+#columns p+p {
   margin: 1.5em 0 0;
 }
 

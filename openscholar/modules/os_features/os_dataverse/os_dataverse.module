@@ -91,7 +91,7 @@ function _os_dataverse_data_view() {
   // Instructs admin to enter their DVN alias at the control panel settings page
   elseif ($space && $space->access_admin()) {
     $l1     = l('feature settings page', "cp/build/features");
-    $l2     = l('create one now', 'http://dvn.iq.harvard.edu', array('absolute' => TRUE));
+    $l2     = l('create one now', 'http://thedata.harvard.edu', array('absolute' => TRUE));
     $result = "<p>Please set up your Dataverse Network alias at the " . $l1 . ".</p>";
     $result .= "<p>If you don't have a Dataverse Network alias yet, go " . $l2 . ".</p>";
     return $result;

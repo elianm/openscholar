@@ -610,7 +610,9 @@ table td.mini .mini-day-on a {
   list-style: none;
 }
 
-
+.block-boxes-os_sv_list_box .os-slider li {
+     list-style: disc;
+}
 
 /* Bio */
 .block-boxes-os_boxes_bio .boxes-box-content {

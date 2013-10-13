@@ -328,7 +328,6 @@ function os_publications_form_biblio_node_form_alter(&$form, $form_state) {
         '#type' => 'hidden',
         '#value' => isset($node->biblio_edition) ? $node->biblio_edition : '',
       );
-      break;
 
     default:
       // Shows the Extra Fields for any selected publication type.

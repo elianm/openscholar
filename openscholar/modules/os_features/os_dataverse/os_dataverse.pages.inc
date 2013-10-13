@@ -20,7 +20,7 @@ function os_dataverse_settings() {
     '#type' => 'textfield',
     '#title' => t('Dataverse alias'),
     '#default_value' => variable_get('os_dataverse_dvn_alias', ''),
-    '#description' => t('The full URL of your dataverse; example: http://dvn.iq.harvard.edu/dvn/dv/youralias'),
+    '#description' => t('The full URL of your dataverse; example: http://thedata.harvard.edu/dvn/dv/youralias'),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,

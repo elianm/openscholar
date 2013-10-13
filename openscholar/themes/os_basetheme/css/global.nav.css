@@ -818,6 +818,10 @@ ul.nice-menu-down li li.menuparent:hover {
 	text-align: left;
 }
 
+.lt-ie9 .section-nav ul.menu li {
+	margin:0;
+}
+
 .section-nav ul.menu li a {
 	display: block;
 	text-decoration: none !important;

@@ -145,18 +145,17 @@ a.rslides_nav {
     color: white !important;
     float: none;
     font-size: 14px;
-    padding: 2px 7px 0;
+    background: url('../images/ss_arrow.png');
+    padding: 1px 13px 0;
     
 }
 
 a.rslides_nav.next {
-    background: url('../images/ss_arrow.png') -20px 2px #284F76;
-    padding: 1px 13px 0;
-}
+    background-position: -38px -4px;
+    }
 
 a.rslides_nav.prev {
-    background: url('../images/ss_arrow.png') 2px 2px #284F76;
-    padding: 1px 13px 0;
+	 background-position: -6px -4px;
 }
 
 /** BASE SLIDESHOW STYLES END - SPECIFIC LAYOUT STYLE CSS BEGINS BELOW **/

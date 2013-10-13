@@ -455,13 +455,11 @@ background-color: #e3e3e1 !important;
     margin-top: 0;
 }
 	
-a.rslides_nav.next {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll -20px 2px #000;
+a.rslides_nav {
+    background-color: #000;
 }
 
-a.rslides_nav.prev {
-    background: url(/profiles/openscholar/themes/os_basetheme/images/ss_arrow.png) repeat scroll 2px 2px #000;
-}
+
 
 /*
 .slide-copy h2 {
