@@ -22,6 +22,8 @@ function os_blog_os_app_info() {
     'views tabs' => array(
       'os_blog' => array('page'),
     ),
+    // Index author in Solr.
+    'index author' => TRUE,
   );
 
   return $apps;

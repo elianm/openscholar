@@ -5,7 +5,7 @@ include_once ('os_search_solr.features.inc');
 /**
  * Implements hook_block_info().
  */
-function os_search_solr_block_info(){
+function os_search_solr_block_info() {
   $blocks = array();
 
   $blocks['site-search'] = array(
@@ -23,7 +23,7 @@ function os_search_solr_block_info(){
  * Generate a block with a promotional link to openscholar.harvard.edu and
  * all os menu blocks.
  */
-function os_search_solr_block_view($delta = ''){
+function os_search_solr_block_view($delta = '') {
   $block = array();
   switch ($delta) {
     case 'site-search' :
@@ -41,7 +41,7 @@ function os_search_solr_block_view($delta = ''){
  *
  * Exposes blocks as OpenScholar widgets.
  */
-function os_search_solr_os_widget(){
+function os_search_solr_os_widget() {
   $items = array();
 
   // Displays site search box
@@ -165,10 +165,38 @@ function os_search_solr_block_view_alter(&$data,$block) {
  * Implements hook_apachesolr_entity_info_alter().
  */
 function os_search_solr_apachesolr_entity_info_alter(&$entity_info) {
+  $entity_info['node']['document callback'] = array('os_search_solr_apachesolr_index_node_solr_document');
   $entity_info['node']['status callback'][] = 'os_search_solr_apachesolr_index_node_status_callback';
 }
 
+/**
+ * Document callback for ApacheSolr, for nodes.
+ *
+ * Remove the author from index, apart of the "Blog" content type.
+ */
+function os_search_solr_apachesolr_index_node_solr_document(ApacheSolrDocument $document, $node, $entity_type, $env_id) {
+  $documents = apachesolr_index_node_solr_document($document, $node, $entity_type, $env_id);
 
+  // Check in the app, if we need to index the author.
+  foreach (os_app_info() as $app) {
+    if (in_array($node->type, $app['nodetypes'])) {
+      $index_author = $app['index author'];
+      break;
+    }
+  };
+
+  if (!$index_author) {
+    // Don't index the author.
+    foreach (array_keys($documents) as $key) {
+      unset($documents[$key]->ss_name_formatted);
+      unset($documents[$key]->tos_name_formatted);
+      unset($documents[$key]->is_uid);
+    }
+  }
+
+  return $documents;
+
+}
 /**
  * Status callback for ApacheSolr, for nodes.
  */

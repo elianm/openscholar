@@ -279,7 +279,7 @@ function os_news_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => 'os_square_50_50',
+            'image_style' => 'os_square_100_100',
           ),
           'type' => 'image',
           'weight' => '0',
@@ -289,7 +289,7 @@ function os_news_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => 'content',
-            'image_style' => 'os_square_50_50',
+            'image_style' => 'os_square_100_100',
           ),
           'type' => 'image',
           'weight' => '0',

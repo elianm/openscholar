@@ -9,18 +9,7 @@ Drupal.behaviors.os_upload_form = {
         $file_select = $('#edit-upload input[type="file"]', ctx);
 
     if ($('label[for="edit-upload-upload"]').length == 0) {
-      $file_select.before($input).click(function (e) {
-      	if ($file_select.hasClass('focus')){
-      	  e.preventDefault();
-      	}
-      	$file_select.addClass('focus');
-      });
-      $input.bind('mousedown', function (e) {$file_select.show(); $input.addClass('focus');})
-            .bind('mouseup', function(e) {$file_select.hide(); $input.removeClass('focus');});
-
-      if (!$.browser.msie) {
-        $input.click(function(e) {$file_select.click();});
-      }
+      $file_select.before($input)
        
       $('.form-item-upload label[for="edit-upload"]', ctx).after($help);
       
@@ -28,10 +17,9 @@ Drupal.behaviors.os_upload_form = {
         if (!('result' in e) || e.result) {
           $('#file-entity-add-upload .form-actions #edit-next', ctx).click();
         }
-        $file_select.removeClass('focus');
       }
       
-      $file_select.change(changeHandler).bind('propertychange', changeHandler);
+      $file_select.change(changeHandler);
     }
   }
 };

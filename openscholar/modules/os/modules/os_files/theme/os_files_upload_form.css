@@ -3,6 +3,10 @@
 	margin: 50px 0;
 }
 
+#file-entity-add-upload #edit-upload {
+  position: relative;
+}
+
 #file-entity-add-upload .form-item-upload input {
 	display: none;
 }
@@ -33,7 +37,13 @@
 #file-entity-add-upload .form-item-upload .form-file {
 	display: block;
 	position: absolute;
-	top: -1000000px;
+	top: -1px;
+  opacity: 0.00;
+  filter: alpha(opacity: 0.00);
+  left: 45%;
+  height: 30px;
+  width: 84px;
+  cursor: pointer;
 }
 
 #file-entity-add-upload .form-item-upload input.file-select {

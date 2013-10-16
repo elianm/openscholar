@@ -79,6 +79,19 @@ function os_pages_vsite_og_node_type_info() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function os_pages_theme() {
+  $reg = array();
+
+  $reg['os_pages_outline_table'] = array(
+    'render element' => 'form'
+  );
+
+  return $reg;
+}
+
+/**
  * Implements hook_block_info().
  */
 function os_pages_block_info() {
@@ -423,19 +436,120 @@ function _os_pages_show_portion($form, $form_state) {
  */
 function os_pages_form_book_admin_edit_alter(&$form, $form_state) {
   if ($form['#node']->type == 'page') {
+    $form['#attached']['js'][] = drupal_get_path('module', 'os_pages').'/os_pages.outline.js';
+    $form['#attached']['css'][] = drupal_get_path('module', 'os_pages').'/os_pages.outline.css';
+
+    $form['table']['#theme'] = 'os_pages_outline_table';
+    $sections = os_pages_get_sections();
+
+    $options = array();
+    foreach ($sections as $s) {
+      $options[$s['bid']] = $s['title'];
+    }
+
+    foreach(element_children($form['table']) as $key) {
+      $form['table'][$key]['hidden'] = array(
+        '#type' => 'checkbox',
+        '#default_value' => $form['table'][$key]['#item']['hidden']
+      );
+      $form['table'][$key]['move_to'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' => $form['#node']->book['bid'],
+      );
+      $form['table'][$key]['move_to_sub'] = array(
+        '#type' => 'button',
+        '#value' => t('Move'),
+        '#name' => $key.'-op',
+        '#ajax' => array(
+          'callback' => 'os_pages_move_page_callback',
+          'wrapper' => 'book-outline'
+        )
+      );
+    }
+
     $form['save']['#value'] = t('Save Section Outline');
+    $form['#submit'][] = 'os_pages_book_admin_edit_submit';
+
+    overlay_request_page_refresh();
+    overlay_trigger_refresh();
   }
 }
 
+function os_pages_get_sections() {
+  $q = db_select('book', 'b')
+    ->fields('b', array('bid'))
+    ->distinct();
+
+  $q->join('node', 'n', 'b.bid = n.nid');
+  $q->fields('n', array('title'));
+
+  if ($vsite = spaces_get_space()) {
+    $q->join('og_membership', 'ogm', 'ogm.etid = b.bid AND ogm.entity_type =\'node\'');
+    $q->condition('gid', $vsite->id);
+  }
+
+  $sections = array();
+  $f = $q->execute();
+  foreach ($f as $r) {
+    $sections[] = array(
+      'bid' => $r->bid,
+      'title' => $r->title
+    );
+  }
+
+  return $sections;
+}
+
+function os_pages_move_page_callback($form, $form_state) {
+  $output = $form['table'];
+
+  // remove link
+  $links = array_keys($form_state['values']['table']);
+  $selected_link = array_intersect($links, $form_state['triggering_element']['#array_parents']);
+  $selected_link = reset($selected_link);
+  $link = $form_state['values']['table'][$selected_link];
+  $node = node_load($link['nid']);
+
+  if ($node->book['bid'] != $link['move_to']) {
+    $node->book['bid'] = $link['move_to'];
+    _book_update_outline($node);
+
+    $desc = _os_pages_get_children_links($output, $output[$selected_link]);
+
+    // unset the links
+    unset($output[$selected_link]);
+    foreach ($desc as $child) {
+      unset($output[$child]);
+    }
+  }
+  return $output;
+}
+
+function _os_pages_get_children_links($output, $parent) {
+  $children = array();
+  $plid = $parent['mlid']['#default_value'];
+  foreach (element_children($output) as $key) {
+    if ($output[$key]['plid']['#default_value'] == $plid) {
+      $children[$key] = $key;
+      $children += _os_pages_get_children_links($output, $output[$key]);
+    }
+  }
+
+  return $children;
+}
+
 /**
- * Implements hook_preprocess_table().
+ * Saves the hidden field of the menu link
  */
-function os_pages_preprocess_table(&$vars) {
-  $node = menu_get_object('node', 2);
-  if (isset($vars['attributes']['id']) && $vars['attributes']['id'] == 'book-outline' && $node) {
-    $vars['header'] = array_slice($vars['header'], 0, 3);
-    foreach ($vars['rows'] as $k => $r) {
-      $vars['rows'][$k]['data'] = array_slice($r['data'], 0, 3);
+function os_pages_book_admin_edit_submit($form, $form_state) {
+  foreach (element_children($form['table']) as $key) {
+    if ($form['table'][$key]['#item']) {
+      $link = $form['table'][$key]['#item'];
+      if ($link['hidden'] != $form_state['values']['table'][$key]['hidden']) {
+        $link['hidden'] = $form_state['values']['table'][$key]['hidden'];
+        menu_link_save($link);
+      }
     }
   }
 }
@@ -655,6 +769,57 @@ function os_pages_form_node_form_alter_add_assets(&$form, $type = 'page') {
 }
 
 /**
+ * Renders the section outline table
+ */
+function theme_os_pages_outline_table($variables) {
+  $form = $variables['form'];
+
+  drupal_add_tabledrag('book-outline', 'match', 'parent', 'book-plid', 'book-plid', 'book-mlid', TRUE, MENU_MAX_DEPTH - 2);
+  drupal_add_tabledrag('book-outline', 'order', 'sibling', 'book-weight');
+
+  $header = array(t('Title'), t('Hide From Section Navigation'), t('Move To Section Navigation'), t('Parent'), t('Weight'));
+
+  $link_options = array(
+    'attributes' => array(
+      'class' => array(
+        'visibility-toggle-link',
+        'button'
+      )
+    ),
+    'external' => TRUE,
+  );
+
+  $rows = array();
+  $destination = drupal_get_destination();
+  $access = user_access('administer nodes');
+  foreach (element_children($form) as $key) {
+    $nid = $form[$key]['nid']['#value'];
+    $href = $form[$key]['href']['#value'];
+
+    // Add special classes to be used with tabledrag.js.
+    $form[$key]['plid']['#attributes']['class'] = array('book-plid');
+    $form[$key]['mlid']['#attributes']['class'] = array('book-mlid');
+    $form[$key]['weight']['#attributes']['class'] = array('book-weight');
+
+    $data = array(
+      theme('indentation', array('size' => $form[$key]['depth']['#value'] - 2)) . drupal_render($form[$key]['title']),
+      /*l($form[$key]['hidden']['#default_value']?t('Hide'):t('Show'), $_GET['q'], $link_options).*/drupal_render($form[$key]['hidden']),
+      drupal_render($form[$key]['move_to']).drupal_render($form[$key]['move_to_sub']),
+      drupal_render($form[$key]['weight']),
+      drupal_render($form[$key]['plid']) . drupal_render($form[$key]['mlid']),
+    );
+    $row = array('data' => $data);
+    if (isset($form[$key]['#attributes'])) {
+      $row = array_merge($row, $form[$key]['#attributes']);
+    }
+    $row['class'][] = 'draggable';
+    $rows[] = $row;
+  }
+
+  return theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'book-outline'), 'empty' => t('No book content available.')));
+}
+
+/*
  * Gets all parents for a given path
  */
 function os_pages_get_subpage_parents() {

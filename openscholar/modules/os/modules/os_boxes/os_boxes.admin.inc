@@ -13,12 +13,14 @@ function os_boxes_edit_widget($box, $source = '') {
     // @todo Multi-step form to choosen plugin type?
     return MENU_NOT_FOUND;
   }
+
+  $info = ctools_get_plugins('boxes', 'plugins', $box->plugin_key);
+
   if ($box->new) {
-    $info = ctools_get_plugins('boxes', 'plugins', $box->plugin_key);
-    drupal_set_title(t('Add New @plugin Widget', array('@plugin' => $info['title'])));
+    drupal_set_title(t('Add New "@plugin" Widget', array('@plugin' => $info['title'])));
   }
   else {
-    drupal_set_title(t('Edit @info', array('@info' => $box->description)));
+    drupal_set_title(t('Edit "@plugin" Widget - @info', array('@plugin' => $info['title'], '@info' => $box->description)));
   }
 
   $form_state = array(

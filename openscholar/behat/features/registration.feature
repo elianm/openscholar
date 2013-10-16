@@ -1,5 +1,5 @@
 Feature:
-  Testing the registration module.
+  Testing the event registration module.
 
   @api
   Scenario: Limit the registration capacity to 1 and verify it for a normal user.

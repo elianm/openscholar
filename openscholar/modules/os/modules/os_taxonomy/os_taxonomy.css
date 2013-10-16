@@ -19,3 +19,7 @@
 #os-taxonomy-select-list #edit-submit {
   padding: 5px;
 }
+
+.os-taxonomy-select-submit {
+  display: none;
+}

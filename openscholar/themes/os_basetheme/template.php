@@ -210,7 +210,11 @@ function os_basetheme_menu_tree(&$variables) {
  * when we're using nice_menus.
  */
 function os_basetheme_preprocess_menu_tree(&$variables) {
-  $variables['os_nice_menus'] = ($variables['tree']['#theme'] == 'os_nice_menus');
+  if (isset($variables['tree']['#theme'])) {
+    $variables['os_nice_menus'] = ($variables['tree']['#theme'] == 'os_nice_menus');
+  }
+  else {
+    $variables['os_nice_menus'] = false;
+  }
   $variables['tree'] = $variables['tree']['#children'];
-  
 }

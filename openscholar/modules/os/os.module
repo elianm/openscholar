@@ -102,8 +102,26 @@ function os_menu_alter(&$items) {
   // users' profiles, we provide our own permission and override the default
   // behavior of the menu item to use our custom permission instead.
   $items['user/autocomplete']['access arguments'] = array(
-      'access user autocomplete',
+    'access user autocomplete',
   );
+
+  $items['node/%node/revisions']['access callback'] = 'os_revisions_tab_access';
+}
+
+/**
+ *  Helper function; checks number of revisions of a node and hides the
+ *  revisions tab for a single revision.
+ *
+ *  @param $node
+ *    The current node being viewed.
+ */
+function os_revisions_tab_access($node) {
+  // Do not display the revisions tab if the node doesn't have any revisions.
+  if (count(node_revision_list($node)) == 1) {
+    return FALSE;
+  }
+
+  return og_moderation_node_revision_access($node);
 }
 
 /**
@@ -531,10 +549,10 @@ function os_preprocess_page(&$vars) {
   ));
 
 
-  //hide useless tabs
+  // Hide useless tabs.
   if (is_array($vars['tabs']['#primary'])) {
     foreach ($vars['tabs']['#primary'] as $delta => $tab) {
-      if (in_array($tab['#link']['path'], array('node/%/edit', 'node/%/log' ))) {
+      if (in_array($tab['#link']['path'], array('node/%/edit', 'node/%/log', 'node/%/revisions'))) {
         unset($vars['tabs']['#primary'][$delta]);
       }
     }
@@ -741,6 +759,14 @@ function os_form_alter(&$form, &$form_state, $form_id) {
     $paths = os_get_app_path();
     $_GET['destination'] = $paths[$form['#node']->type];
   }
+
+  // Add a cancel link to node forms.
+  if (strpos($form_id, '_node_form')) {
+    $form['actions']['cancel'] = array(
+      '#markup'   => l(t('Cancel'), ''),
+      '#weight' => 15,
+    );
+  }
 }
 
 /**
@@ -874,6 +900,10 @@ function os_date_format_types() {
  * Implements hook_init().
  */
 function os_init() {
+  // Load the correct jQuery version.
+  global $conf;
+  $conf['jquery_update_jquery_version'] = strpos($_GET['q'], 'admin') === 0 ? '1.5' : '1.8';
+
   // Execute the "In a OS Site" context condition
   if ($plugin = context_get_plugin('condition', 'os_site')) {
     $plugin->execute();
@@ -1271,6 +1301,30 @@ function os_node_view_alter(&$build) {
 }
 
 /**
+ * Implements hook_contextual_links_view_alter().
+ *
+ * Add "Revisions" to the contextual links in the node view.
+ */
+function os_contextual_links_view_alter(&$element, $items) {
+  if (empty($element['#element']['#entity_type']) || $element['#element']['#entity_type'] != 'node') {
+    // Not a node element.
+    return;
+  }
+
+  if (!user_access('view revisions')) {
+    // User can't view revisions.
+    return;
+  }
+
+  $node = $element['#element']['#node'];
+
+  $element['#links']['node-revisions'] = array(
+    'title' => t('Revisions'),
+    'href' => 'node/' . $node->nid . '/revisions',
+  );
+}
+
+/**
  * Implements hook_permission().
  *
  * Defines permissions for all the regions of the default theme
@@ -1455,6 +1509,8 @@ function os_app_info($app_name = NULL) {
           // Adds default values.
           $app += array(
           	'path' => '',
+            // Determine if author should be indexed in Solr.
+            'index author' => FALSE,
           );
 
           // Adds the module information.
@@ -1583,3 +1639,4 @@ function os_preprocess_toolbar(&$vars) {
     ),
   );
 }
+

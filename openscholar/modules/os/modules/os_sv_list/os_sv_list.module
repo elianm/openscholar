@@ -124,3 +124,18 @@ function os_sv_list_get_content_type_vocabs($bundle) {
 
   return $options;
 }
+
+/**
+ * Element validate; Set 'terms' according to 'vocabs'.
+ */
+function os_sv_list_terms_element_validate($element, &$form_state) {
+  // Get all selected terms from the 'vocab' select fields.
+  $tids = array();
+  foreach ($form_state['values']['vocabs'] as $value) {
+    $tids = array_merge($tids, $value);
+  }
+
+  // Set 'terms' value to be the selected vocab terms.
+  $terms_element = array('#parents' => array('terms'));
+  form_set_value($terms_element, $tids, $form_state);
+}

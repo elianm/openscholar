@@ -187,7 +187,7 @@ function os_reader_get_importers_list($feed_importer_nid = NULL) {
 function os_reader_os_add_new_links_alter(&$links) {
   $menu = menu_get_item();
 
-  $node_is_news_type = isset($menu['map']['1']) && $menu['map']['1']->type == 'news';
+  $node_is_news_type = isset($menu['map']['1']) && is_object($menu['map']['1']) && $menu['map']['1']->type == 'news';
 
   if (($menu['path'] == 'news' || $node_is_news_type) && os_reader_import_news_access_callback()) {
     $links['news-import'] = array(

@@ -253,9 +253,9 @@ function theme_os_taxonomy_term_item($variables) {
   $item_wrapper = !empty($variables['childs']) ? "<div class='term-head'>" : '';
 
   $variables['link_options']['html'] = TRUE;
+  $variables['link_options']['attributes']['title'] = filter_xss($variables['description'], array());
   $name = !$number && !$variables['link_to_empty_terms'] ? $name : l($name . $number, $variables['url_path']['path'], $variables['link_options']);
   $title = $item_wrapper . $name;
-
 
   if ($variables['show_term_descriptions'] && !empty($variables['description'])) {
     $title .= '<div class="description">' . filter_xss($variables['description']) . '</div>';
@@ -616,6 +616,7 @@ function os_taxonomy_select_list($form, $form_state, $terms_list, $path) {
   $form['#vocabulary'] = $wrapper->vocabulary->value();
 
   $form['#attached']['css'][] = drupal_get_path('module', 'os_taxonomy') . '/os_taxonomy.css';
+  $form['#attached']['js'][] = drupal_get_path('module', 'os_taxonomy') . '/os_taxonomy.js';
   // Giving a unique name for the form element will allow us coloring it when
   // there is a problem in the submission of the form.
   $form['terms_' . $form['#vocabulary']->vid] = array(
@@ -632,6 +633,9 @@ function os_taxonomy_select_list($form, $form_state, $terms_list, $path) {
   $form['actions'] = array(
     '#type' => 'actions',
     'submit' => array(
+      '#attributes' => array(
+        'class' => array('os-taxonomy-select-submit'),
+      ),
       '#type' => 'submit',
       '#value' => t('Go'),
     ),

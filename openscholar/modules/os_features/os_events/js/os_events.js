@@ -27,7 +27,7 @@
             var eventDescription = eventItem.find('.views-field-field-date').hide();
 
             // Attaching the date of the event to the title of the link.
-            eventItem.find('.views-field-colorbox a').attr('title', eventDescription.text().trim());
+            eventItem.find('.views-field-colorbox a').attr('title', $.trim(eventDescription.text()));
           });
         });
       });

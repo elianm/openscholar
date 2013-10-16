@@ -175,6 +175,9 @@ projects[imagefield_crop][patch][] = "http://drupal.org/files/imagefield_crop-ma
 projects[jcarousel][subdir] = "contrib"
 projects[jcarousel][version] = 2.6
 
+projects[jquery_update][subdir] = "contrib"
+projects[jquery_update][version] = 2.3
+
 projects[js][subdir] = "contrib"
 projects[js][version] = 1.0-beta2
 
@@ -417,6 +420,10 @@ libraries[responsiveslides][patch][] = "https://raw.github.com/openscholar/opens
 libraries[flexslider][type] = "libraries"
 libraries[flexslider][download][type] = "file"
 libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/flexslider1.zip"
+
+libraries[select2][type] = "libraries"
+libraries[select2][download][type] = "file"
+libraries[select2][download][url] = "https://github.com/ivaynberg/select2/archive/3.4.3.zip"
 
 libraries[twitter-api-php][type] = "libraries"
 libraries[twitter-api-php][download][type] = "file"

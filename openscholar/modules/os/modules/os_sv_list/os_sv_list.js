@@ -18,9 +18,9 @@
         var selected_sort = 'sort_' + content_type;
         var more_link = $('#more_link_div input[name="more_link"]');
         var defaults = Drupal.settings.more_link_defaults;
-        
+
         //apply content_type appropriate sorts when ct changes
-        sortby.children('option').each(function() { 
+        sortby.children('option').each(function() {
           this_sort = $(this).attr('value');
           if ($.inArray(this_sort, sort_whitelist) == -1) {
             // show/hide appropriate options
@@ -38,12 +38,12 @@
             }
           }
         });
-        
+
         //apply content_type appropriate sorts when ct changes
-        display_style.children('option').each(function() { 
+        display_style.children('option').each(function() {
           this_display = $(this).attr('value');
           if ($.inArray(this_display, display_whitelist) == -1) {
-            
+
             // show/hide appropriate options
             remove = ($.inArray(content_type, Drupal.settings.os_sv_list.has_display[this_display]) == -1);
             $(this).attr('hidden', remove).attr('disabled',remove);
@@ -55,7 +55,7 @@
           }
         });
 
-        // swap out the more link url.  
+        // swap out the more link url.
         more_link.val(defaults[content_type]);
       });
 
@@ -66,6 +66,11 @@
       var content_type = $('#os_sv_list_content_type').val();
       var show_all_checked = $('#biblio_show_all_check').is(':checked') ? true : false;
 
+      });
+
+      // Select2.
+      $("#vocabs").find('.form-select').select2({
+          placeholder: Drupal.t("Click here to select terms")
       });
     }
   };

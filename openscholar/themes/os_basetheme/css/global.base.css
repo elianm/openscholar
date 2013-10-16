@@ -432,6 +432,11 @@ ul ul ul ul {
     margin:20px 0 0 0;
 }
 
+.calendar-calendar .week-view div.single-day .view-item {
+  position: relative;
+  float: left;
+}
+
 .view-os-events .field-items{
     display: inline-block;
 }
