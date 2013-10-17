@@ -39,7 +39,7 @@ function harvard_activity_reports_menu() {
  *   The user ID if found, or FALSE.
  */
 function harvard_activity_reports_query_user_by_id($hash_id)  {
-  if (!module_exists('iqss_pinserver_register')) {
+  if (!module_exists('pinserver_authenticate')) {
     return FALSE;
   }
   $result = db_query('SELECT uid, huid FROM {pinserver_users} WHERE hashID = :hashID', array(':hashID'=>$hash_id))->fetchObject();
@@ -116,13 +116,13 @@ function harvard_activity_reports_query_vsite_id($uid) {
  *   The hashed user ID.
  */
 function harvard_activity_reports_update_huid_hash($uid, $hash_id) {
-  if (!module_exists('iqss_pinserver_register')) {
+  if (!module_exists('pinserver_authenticate')) {
     return;
   }
 
   // Sanity check to make sure once again that this id does not exist in
   // the table.
-  if ($result = db_query("SELECT count(uid) AS uidCount FROM pinserver_users} WHERE uid = :uid", array(':uid' => $uid))->fetchField()) {
+  if ($result = db_query("SELECT count(uid) AS uidCount FROM {pinserver_users} WHERE uid = :uid", array(':uid' => $uid))->fetchField()) {
     return;
   }
 
@@ -329,8 +329,8 @@ function harvard_activity_reports_page() {
   if ($nid = harvard_activity_reports_query_user()) {
     // xml status is ok
     $status = "ok";
-    if (module_exists('iqss_pinserver_register')) {
-      $hash_id = db_query("SELECT i.hashID FROM {iqss_pinserver_register} i, {node} n WHERE n.nid = :nid AND i.uid = n.uid",array(':nid'=>$nid))->fetchField();
+    if (module_exists('pinserver_authenticate')) {
+      $hash_id = db_query("SELECT i.hashID FROM {pinserver_users} i, {node} n WHERE n.nid = :nid AND i.uid = n.uid",array(':nid'=>$nid))->fetchField();
     }
     else{
       $hash_id = NULL;
